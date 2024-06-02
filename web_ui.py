@@ -300,7 +300,7 @@ with gr.Blocks(title="孟及科技（上海）有限公司", js=js, css=css, the
     }
 
     .banner-container .prev:hover{
-        background-image: url(https://github.com/esas4/aigc_web_ui/blob/main/images/g_left.png?raw=true);
+        background-image: url(https://github.com/esas4/aigc_web_ui/blob/main/images/b_left.png?raw=true);
         z-index: 9;
         background-size: 100% 100%;
         background-repeat: no-repeat;
