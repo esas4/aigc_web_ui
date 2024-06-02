@@ -163,10 +163,11 @@ with gr.Blocks(title="孟及科技（上海）有限公司", js=js, css=css, the
                 vertical-align: baseline;
             }
       .banner-container {
-        width: 100%;
-        height:200px;
+        width: 90%;
+        height:300px;
         overflow: hidden;
         position: relative;
+        margin: 0 auto;
       }
       .banner-img-container {
         display: flex;
@@ -183,7 +184,7 @@ with gr.Blocks(title="孟及科技（上海）有限公司", js=js, css=css, the
       }
       .item-img {
         height: 100%;
-        width: 80%;
+        width: 60%;
         display: flex;
         align-items: center;
         justify-content: center;
@@ -194,7 +195,7 @@ with gr.Blocks(title="孟及科技（上海）有限公司", js=js, css=css, the
         width: 100%;
       }
       .banner-text {
-        width: 20%;
+        width: 40%;
       }
       .btn {
         width: 1rem;
@@ -274,8 +275,45 @@ with gr.Blocks(title="孟及科技（上海）有限公司", js=js, css=css, the
       #banner-control-8 {
         left: calc(50% + 7rem);
       } 
+    
+    .banner-container .prev, .banner-container .next{
+        width: 40px;
+        height: 70px;
+        /* border: 2px solid black; */
+        position: absolute;
+        top: 50%;
+        margin-top: -70px;
+        z-index: 9;
+        background-size: 100% 100%;
+        background-repeat: no-repeat;
+    }
+
+    .banner-container .prev{
+        left: 0px;
+        background-image: url(images/g_left.png);
+    }
+
+    .banner-container .next{
+        right: 0px;
+        background-image: url(images/g_right.png);
+    }
+
+    .banner-container .prev:hover{
+        background-image: url(images/b_left.png);
+        z-index: 9;
+        background-size: 100% 100%;
+        background-repeat: no-repeat;
+    }
+
+    .banner-container .next:hover{
+        background-image: url(images/b_right.png);
+        z-index: 9;
+        background-size: 100% 100%;
+        background-repeat: no-repeat;
+    }
+
        .banner-item .banner-text {
-                width: 25%;
+                width: 40%;
                 background-color: white;
                 box-sizing: border-box;
                 margin: 10px;
@@ -298,7 +336,37 @@ with gr.Blocks(title="孟及科技（上海）有限公司", js=js, css=css, the
                 margin-bottom: 5px; /* 添加一些间距 */
                 font-size: 16px;
             }
+
         </style>
+        <script>
+            document.addEventListener("DOMContentLoaded", function() {
+              const prevButton = document.querySelector('.prev');
+              const nextButton = document.querySelector('.next');
+              const radioButtons = document.querySelectorAll('input[name="radio-set"]');
+          
+              let currentIndex = 0; // 起始索引设置为0，对应第一张图片
+          
+              // 点击“上一张”按钮
+              prevButton.addEventListener('click', function() {
+                if (currentIndex === 0) {
+                  currentIndex = radioButtons.length - 1; // 如果是第一张图，跳到最后一张图
+                } else {
+                  currentIndex--; // 否则索引减1
+                }
+                radioButtons[currentIndex].checked = true;
+              });
+          
+              // 点击“下一张”按钮
+              nextButton.addEventListener('click', function() {
+                if (currentIndex === radioButtons.length - 1) {
+                  currentIndex = 0; // 如果是最后一张图，跳到第一张图
+                } else {
+                  currentIndex++; // 否则索引加1
+                }
+                radioButtons[currentIndex].checked = true;
+              });
+            });
+        </script>          
     </head>
 
     <body>
@@ -316,12 +384,16 @@ with gr.Blocks(title="孟及科技（上海）有限公司", js=js, css=css, the
       <input type="radio" name="radio-set" id="banner-control-6" />
       <input type="radio" name="radio-set" id="banner-control-7" />
       <input type="radio" name="radio-set" id="banner-control-8" />
+
+      <div class="prev"></div>
+      <div class="next"></div>
+
       <div class="banner-img-container">
         <div class="banner-item" id="banner01">
           <div class="item-img">
             <img
               id="img-banner01"
-              src="https://github.com/esas4/aigc_web_ui/blob/main/img_script_writing.png?raw=true"
+              src="file/bg-showcase-1.jpg"
               alt="chatbot"
             />
           </div>
@@ -432,8 +504,7 @@ with gr.Blocks(title="孟及科技（上海）有限公司", js=js, css=css, the
         </div>
       </div>
     </body>
-
-    </html>
+</html>
     """
     gr.HTML(display_html)
     #,title="孟及科技(上海)有限公司"
