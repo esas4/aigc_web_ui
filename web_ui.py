@@ -4,8 +4,6 @@ css = """
 .gradio-container {background-color: #0B1013}
 #chatbot_com {color: blue}
 footer {visibility: hidden}
-#component-19-button {font-size: 18px}
-#component-20-button {font-size: 18px}
 """
 
 js = """
@@ -18,7 +16,6 @@ function createGradioAnimation() {
     container.style.marginBottom = '20px';
     container.style.color = "white";
     container.style.fontFamily = 'Microsoft Yahei UI';
-
     var text = "欢迎来到孟及科技!";
     for (var i = 0; i < text.length; i++) {
         (function(i){
@@ -27,19 +24,15 @@ function createGradioAnimation() {
                 letter.style.opacity = '0';
                 letter.style.transition = 'opacity 0.5s';
                 letter.innerText = text[i];
-
                 container.appendChild(letter);
-
                 setTimeout(function() {
                     letter.style.opacity = '1';
                 }, 50);
             }, i * 250);
         })(i);
     }
-
     var gradioContainer = document.querySelector('.gradio-container');
     gradioContainer.insertBefore(container, gradioContainer.firstChild);
-
     return 'Animation created';
 }
 """
@@ -62,7 +55,7 @@ with gr.Blocks(title="孟及科技（上海）有限公司", js=js, css=css, the
         with gr.Column():
             chatbot_human=gr.Chatbot(label="对话记录", value=chat_history, height=400)   
             msg_human=gr.Textbox(label="你的问题", value="你好")
-    
+
     msg_human.submit(greet, [msg_human, chatbot_human], [chatbot_human, avatar_human])  
 
 
@@ -72,12 +65,34 @@ with gr.Blocks(title="孟及科技（上海）有限公司", js=js, css=css, the
         with gr.Column():
             chatbot_cartoon=gr.Chatbot(label="对话记录", value=chat_history, height=400)   
             msg_cartoon=gr.Textbox(label="你的问题", value="你好")
-    
+
     msg_cartoon.submit(greet2d, [msg_cartoon, chatbot_cartoon], [chatbot_cartoon, avatar_cartoon])  
 
 
 with gr.Blocks(title="孟及科技（上海）有限公司", js=js, css=css, theme=gr.themes.Soft()) as demo4:
 
+    # 在gradio生成的界面添加返回主页的链接
+    # gr.Markdown("""
+    #     <div style="display: flex; justify-content: center;flex-wrap:wrap">
+    #         <div style="width: 50%;display: flex; flex-direction: column; justify-content: center; align-items: center;min-width:20rem">
+    #             <div style="text-align: left;">
+    #                 <h2 style="color:white; font-family:sans-serif;">虚拟数字人</h2>
+    #                 <h3 style="color:white; font-family:sans-serif;">- 强大自研能力，打造行业领先的多模态交互技术</h3>
+    #                 <h3 style="color:white; font-family:sans-serif;">- 智能播报、直播、交互型等多种数字人产品方案</h3>
+    #                 <h3 style="color:white; font-family:sans-serif;">- 为企业提供一站式、拟人化的客户服务</h3>
+    #                 <h2>
+    #                     <a href="https://baidu.com" style="color: white; background-color: grey; padding: 10px; transition: background-color 0.3s ease; border: 2px solid transparent; margin-left: 5px; margin-right: 10px; text-decoration: none; border-radius: 5px;">购买咨询</a>
+    #                     <a href="https://bing.com" style="color: black; background-color: white; padding: 10px; transition: background-color 0.3s ease; border: 2px solid transparent; text-decoration: none; border-radius: 5px; margin-left: 80px;">关于我们</a>
+    #                 </h2>
+    #             </div>
+    #         </div>
+    #         <div style="width: 50%; display: flex; justify-content: center; align-items: center; margin-top: 2vw;min-width:288px">
+    #             <video width="500" height="400" controls>
+    #             <source src="https://portal.volccdn.com/obj/volcfe/avatar/can.mp4" type="video/mp4">
+    #             </video>
+    #         </div>
+    #     </div>
+    #         """)
     intro_html="""
     <!DOCTYPE html>
     <html>
@@ -120,7 +135,7 @@ with gr.Blocks(title="孟及科技（上海）有限公司", js=js, css=css, the
                     </h2>
                 </div>
             </div>
-            <div class="video_class" style="margin-top:20px">
+            <div class="video_class">
                 <video class="video_display" controls>
                 <source src="https://portal.volccdn.com/obj/volcfe/avatar/can.mp4" type="video/mp4">
                 </video>
@@ -140,379 +155,134 @@ with gr.Blocks(title="孟及科技（上海）有限公司", js=js, css=css, the
                 """)
     gr.TabbedInterface([avatar1, avatar2], ["3D数字分身", "动画数字人"])
 
-    gr.Markdown("""
-            <div style="display: flex; justify-content: center;">
-                <h2> 
-                    <span style="color:white">功能展示</span>
-                </h2>
-            </div>
-                """)
-
     display_html="""
-<!DOCTYPE html>
-<html lang="en" >
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!DOCTYPE html>
+    <html>
     <head>
-        <style>
-            * {
-                margin: 0;
-                padding: 0;
-                border: 0;
-                font-size: 100%;
-                font: inherit;
-                vertical-align: baseline;
+    <style>
+        * {
+            padding: 0;
+            margin: 0;
+        }
+        .pics {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 30vh;
+        }
+        .shell{
+            width: 95%;
+            height: 300px;
+            display: flex;
+            margin:10px auto 0px;
+        }
+        .box{
+            flex: 1;
+            overflow: hidden;
+            transition: .5s;
+            margin: 0 10px;
+            box-shadow: 5px 5px 10px rgba(0, 0, 0, .5);
+            border-radius: 20px;
+            border: 10px solid #000;
+            background-color: white;
+            max-height:300px;
+        }
+        .box>img{
+            width: 200%;
+            height: 80%;
+            object-fit: cover;
+            transition: .5s;
+        }
+        .box>span{
+            font-family:sans-serif;
+            text-align: center;
+            height: 20%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-weight: bold;
+            font-size: 17px;
+        }
+
+        .box:hover{
+            flex-basis: 35%;
+        }
+        .box:hover>img{
+            width: 100%;
+            height: 100%;
+            object-fit:contain;
+            max-height:300px;
+        }
+
+        @media (max-width:768px){
+            .shell {
+                flex-wrap: nowrap;
+                overflow-x: auto; 
             }
-      .banner-container {
-        width: 90%;
-        height:300px;
-        overflow: hidden;
-        position: relative;
-        margin: 0 auto;
-      }
-      .banner-img-container {
-        display: flex;
-        align-self: flex-start;
-        height: 80%;
-        width: 800%;
-        transition: transform 0.5s ease;
-      }
-      .banner-item {
-        height: 100%;
-        display: flex;
-        min-width: 12.5%;
-        max-width: 12.5%;
-      }
-      .item-img {
-        height: 100%;
-        width: 60%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-      }
-      .item-img img {
-        object-fit: contain;
-        height: 100%;
-        width: 100%;
-      }
-      .banner-text {
-        width: 40%;
-      }
-      .btn {
-        width: 1rem;
-        height: 1rem;
-        border-radius: 0.5rem;
-        border: 2px solid black;
-        box-sizing: border-box;
-        cursor: pointer;
-      }
-      .btn:active {
-        background-color: rgb(108, 179, 246);
-      }
-      .banner-tool {
-        margin-top: 20px;
-        width: 20rem;
-        display: flex;
-        justify-content: space-around;
-      }
-      /* 设置轮播图动画 */
-      #banner-control-1:checked ~ .banner-img-container {
-        transform: translateX(0%);
-      }
-      #banner-control-2:checked ~ .banner-img-container {
-        transform: translateX(-12.5%);
-      }
-      #banner-control-3:checked ~ .banner-img-container {
-        transform: translateX(-25%);
-      }
-      #banner-control-4:checked ~ .banner-img-container {
-        transform: translateX(-37.5%);
-      }
-      #banner-control-5:checked ~ .banner-img-container {
-        transform: translateX(-50%);
-      }
-      #banner-control-6:checked ~ .banner-img-container {
-        transform: translateX(-62.5%);
-      }
-      #banner-control-7:checked ~ .banner-img-container {
-        transform: translateX(-75%);
-      }
-      #banner-control-8:checked ~ .banner-img-container {
-        transform: translateX(-87.5%);
-      }
-      input[name="radio-set"] {
-        position: absolute;
-        bottom:0;
-        z-index: 9;
-        border: 1px solid white;
-        background-color:white;
-        border-radius:1rem;
-        box-sizing: border-box;
-      }
-      input[name="radio-set"]:checked {
-        background-color:#2483eb;
-      }
-      #banner-control-1 {
-        left: calc(50% - 7rem);
-      }
-      #banner-control-2 {
-        left: calc(50% - 5rem);
-      }
-      #banner-control-3 {
-        left: calc(50% - 3rem);
-      }
-      #banner-control-4 {
-        left: calc(50% - 1rem);
-      }
-      #banner-control-5 {
-        left: calc(50% + 1rem);
-      }
-      #banner-control-6 {
-        left: calc(50% + 3rem);
-      }
-      #banner-control-7 {
-        left: calc(50% + 5rem);
-      }
-      #banner-control-8 {
-        left: calc(50% + 7rem);
-      } 
-    
-    .banner-container .prev, .banner-container .next{
-        width: 40px;
-        height: 70px;
-        /* border: 2px solid black; */
-        border: 2px solid red;
-        position: absolute;
-        top: 50%;
-        margin-top: -70px;
-        z-index: 9;
-        background-size: 100% 100%;
-        background-repeat: no-repeat;
-    }
-
-    .banner-container .prev{
-        left: 0px;
-        background-image: url(https://github.com/esas4/aigc_web_ui/blob/main/images/g_left.png?raw=true);
-    }
-
-    .banner-container .next{
-        right: 0px;
-        background-image: url(https://github.com/esas4/aigc_web_ui/blob/main/images/g_right.png?raw=true);
-    }
-
-    .banner-container .prev:hover{
-        background-image: url(https://github.com/esas4/aigc_web_ui/blob/main/images/b_left.png?raw=true);
-        z-index: 9;
-        background-size: 100% 100%;
-        background-repeat: no-repeat;
-    }
-
-    .banner-container .next:hover{
-        background-image: url(https://github.com/esas4/aigc_web_ui/blob/main/images/g_right.png?raw=true);
-        z-index: 9;
-        background-size: 100% 100%;
-        background-repeat: no-repeat;
-    }
-
-       .banner-item .banner-text {
-                width: 40%;
-                background-color: white;
-                box-sizing: border-box;
-                margin: 10px;
-                padding: 10px;
-                display: flex;
-                flex-direction: column;
-                justify-content: center;
-                line-height: 1.5;
-                height:90%;
-                overflow: auto;
+            .box {
+                flex: 0 0 auto; 
+                width: 90%;
+                margin: 0 5px; 
             }
-
-            .banner-item .banner-text h3 {
-                margin-bottom: 10px; /* 添加一些间距 */
-                font-size: 20px;
-                font-weight: bold;
+            .box {
+                pointer-events: none; 
             }
-
-            .banner-item .banner-text li {
-                margin-bottom: 5px; /* 添加一些间距 */
-                font-size: 16px;
+            .box>img {
+                pointer-events: none; 
             }
-
-        </style>
-        <script>
-            document.addEventListener("DOMContentLoaded", function() {
-              const prevButton = document.querySelector('.prev');
-              const nextButton = document.querySelector('.next');
-              const radioButtons = document.querySelectorAll('input[name="radio-set"]');
-          
-              let currentIndex = 0; // 起始索引设置为0，对应第一张图片
-          
-              // 点击“上一张”按钮
-              prevButton.addEventListener('click', function() {
-                if (currentIndex === 0) {
-                  currentIndex = radioButtons.length - 1; // 如果是第一张图，跳到最后一张图
-                } else {
-                  currentIndex--; // 否则索引减1
-                }
-                radioButtons[currentIndex].checked = true;
-              });
-          
-              // 点击“下一张”按钮
-              nextButton.addEventListener('click', function() {
-                if (currentIndex === radioButtons.length - 1) {
-                  currentIndex = 0; // 如果是最后一张图，跳到第一张图
-                } else {
-                  currentIndex++; // 否则索引加1
-                }
-                radioButtons[currentIndex].checked = true;
-              });
-            });
-        </script>          
+        }
+    </style>
     </head>
-
     <body>
-       <div class="banner-container">
-      <input
-        type="radio"
-        name="radio-set"
-        id="banner-control-1"
-        checked="checked"
-      />
-      <input type="radio" name="radio-set" id="banner-control-2" />
-      <input type="radio" name="radio-set" id="banner-control-3" />
-      <input type="radio" name="radio-set" id="banner-control-4" />
-      <input type="radio" name="radio-set" id="banner-control-5" />
-      <input type="radio" name="radio-set" id="banner-control-6" />
-      <input type="radio" name="radio-set" id="banner-control-7" />
-      <input type="radio" name="radio-set" id="banner-control-8" />
-
-      <div class="prev"></div>
-      <div class="next"></div>
-
-      <div class="banner-img-container">
-        <div class="banner-item" id="banner01">
-          <div class="item-img">
-            <img
-              id="img-banner01"
-              src="https://github.com/esas4/aigc_web_ui/blob/main/bg-showcase-1.jpg?raw=true"
-              alt="chatbot"
-            />
-          </div>
-          <div class="banner-text">
-            <h3>剧本创作</h3>
-            <p>根据输入的文本生成剧本</p>
-            <p>个性化写作助手</p>
-          </div>
+        <div style="display: flex; justify-content: center;">
+            <h2> 
+                <span style="color:white">功能展示</span>
+            </h2>
         </div>
-        <div class="banner-item" id="banner02">
-          <div class="item-img">
-            <img
-              id="img-banner02"
-              src="https://github.com/esas4/aigc_web_ui/blob/main/bg-showcase-2.jpg?raw=true"
-              alt="summary"
-            />
-          </div>
-          <div class="banner-text">
-            <h3>语音合成</h3>
-            <p>根据输入文本生成语音</p>
-            <p>多种角色语音</p>
-            <p>自定义语音</p>
-          </div>
+        <pics>
+        <div class="shell">
+            <div class="box">
+                <img src="https://www.mengji.tech/assets/img/bg-showcase-1.jpg" alt="chatbot">
+                <span>剧本创作</span>
+            </div>
+            <div class="box">
+                <img src="https://www.mengji.tech/assets/img/bg-showcase-2.jpg" alt="summary">
+                <span>语音合成</span>
+            </div>
+            <div class="box">
+                <img src="	https://www.mengji.tech/assets/img/bg-showcase-3.jpg" alt="Text2Video">
+                <span>本地知识库问答</span>
+            </div>
+            <div class="box">
+                <img src="https://www.mengji.tech/assets/img/bg-showcase-1.jpg" alt="Text2Voice">
+                <span>动画数字人制作</span>
+            </div>
+            <div class="box">
+                <img src="https://www.mengji.tech/assets/img/bg-showcase-2.jpg" alt="Text2Voice">
+                <span>3D数字分身</span>
+            </div>
+            <div class="box">
+                <img src="	https://www.mengji.tech/assets/img/bg-showcase-3.jpg" alt="Text2Voice">
+                <span>动画制作</span>
+            </div>
+            <div class="box">
+                <img src="https://www.mengji.tech/assets/img/bg-showcase-1.jpg" alt="Text2Voice">
+                <span>一键换衣</span>
+            </div>
+            <div class="box">
+                <img src="https://www.mengji.tech/assets/img/bg-showcase-2.jpg" alt="Text2Voice">
+                <span>视频编辑</span>
+            </div>
         </div>
-        <div class="banner-item" id="banner03">
-          <div class="item-img">
-            <img
-              id="img-banner03"
-              src="https://github.com/esas4/aigc_web_ui/blob/main/bg-showcase-3.jpg?raw=true"
-              alt="Q&A"
-            />
-          </div>
-          <div class="banner-text">
-            <h3>本地知识库问答</h3>
-            <p>上传本地PDF文件</p>
-            <p>提供精确的问题回答</p>
-          </div>
-        </div>
-        <div class="banner-item" id="banner04">
-          <div class="item-img">
-            <img
-              id="img-banner04"
-              src="https://github.com/esas4/aigc_web_ui/blob/main/bg-showcase-1.jpg?raw=true"
-              alt="3D animation"
-            />
-          </div>
-          <div class="banner-text">
-            <h3>动画数字人制作</h3>
-            <p>输入语音，编辑数字人嘴型</p>
-          </div>
-        </div>
-        <div class="banner-item" id="banner05">
-          <div class="item-img">
-            <img
-              id="img-banner05"
-              src="https://github.com/esas4/aigc_web_ui/blob/main/bg-showcase-2.jpg?raw=true"
-              alt="3D avatar"
-            />
-          </div>
-          <div class="banner-text">
-            <h3>3D数字分身</h3>
-            <p>上传视频，获得高质量数字分身</p>
-            <p>自定义语音驱动</p>
-            <p>定制属于自己的分身</p>
-          </div>
-        </div>
-        <div class="banner-item" id="banner06">
-          <div class="item-img">
-            <img
-              id="img-banner06"
-              src="https://github.com/esas4/aigc_web_ui/blob/main/bg-showcase-3.jpg?raw=true"
-              alt="anime production"
-            />
-          </div>
-          <div class="banner-text">
-            <h3>动画制作</h3>
-            <p>合成任意人物的动作动画</p>
-            <p>多种默认动作</p>
-            <p>自定义动作</p>
-          </div>
-        </div>
-        <div class="banner-item" id="banner07">
-          <div class="item-img">
-            <img
-              id="img-banner07"
-              src="https://github.com/esas4/aigc_web_ui/blob/main/bg-showcase-1.jpg?raw=true"
-              alt="conveniently change cloth"
-            />
-          </div>
-          <div class="banner-text">
-            <h3>一键换衣</h3>
-            <p>虚拟换衣</p>
-          </div>
-        </div>
-        <div class="banner-item" id="banner08">
-          <div class="item-img">
-            <img
-              id="img-banner08"
-              src="https://github.com/esas4/aigc_web_ui/blob/main/bg-showcase-2.jpg?raw=true"
-              alt="edit video"
-            />
-          </div>
-
-          <div class="banner-text">
-            <h3>视频编辑</h3>
-            <p>替换人脸</p>
-          </div>
-        </div>
-      </div> 
+        </pics>
     </body>
-</html>
+    </html>
     """
     gr.HTML(display_html)
     #,title="孟及科技(上海)有限公司"
     footer_html = """
     <!DOCTYPE html>
     <html>
-
     <head>
     <style>
     .footer {
@@ -520,7 +290,6 @@ with gr.Blocks(title="孟及科技（上海）有限公司", js=js, css=css, the
         padding: 10px;
         text-align: center;
         }
-
     .footer a {
         margin-right: 10px;
         text-decoration: none;
@@ -528,7 +297,6 @@ with gr.Blocks(title="孟及科技（上海）有限公司", js=js, css=css, the
         }
     </style>
     </head>
-
     <body>
     <div class="footer">
         <div>
@@ -540,11 +308,9 @@ with gr.Blocks(title="孟及科技（上海）有限公司", js=js, css=css, the
         <div>© 孟及科技（上海）有限公司 2024. All Rights Reserved.</div>
     </div>
     </body>
-
     </html>
     """
     gr.HTML(footer_html)
-    
-    
-# demo4.launch(share=True)
-demo4.launch()
+
+
+demo4.launch(share=True)
